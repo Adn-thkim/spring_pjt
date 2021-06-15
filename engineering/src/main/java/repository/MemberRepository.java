@@ -23,4 +23,19 @@ public class MemberRepository {
 		statement = namespace + ".memberInsert";
 		sqlSession.insert(statement, dto);
 	}
+	
+	public MemberDTO memInfo(String membId) {
+		statement = namespace + ".memberInfo";
+		return sqlSession.selectOne(statement, membId);
+	}
+	
+	public void memUpdate(MemberDTO dto) {
+		statement = namespace + ".memberUpdate";
+		sqlSession.update(statement, dto);
+	}
+	
+	public void memDel(String membId) {
+		statement = namespace + ".memberDelete";
+		sqlSession.delete(statement, membId);
+	}
 }

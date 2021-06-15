@@ -21,4 +21,21 @@ MEMB_ID membId, MEMB_NAME membName, MEMB_PW membPw, MEMB_ADDR membAddr, MEMB_PHO
 	from member
 </select>
 
+<select id="memberInfo" parameterType="String" resultType="model.MemberDTO">
+	select <include refid="selectColumn" />
+	from member
+	where memb_id = #{membId}
+</select>
+
+<update id="memberUpdate" parameterType="model.MemberDTO">
+	update member
+	set POST_NUMBER = #{postNumber}, DETAIL_ADDR = #{detailAddr}, MEMB_ADDR = #{membAddr}, MEMB_EMAIL = #{membEmail}, MEMB_PHONE_NUMBER = #{membPhoneNumber}, MEMB_CONFIRM = #{membConfirm}
+	where MEMB_ID = #{membId}
+</update>
+
+<delete id="memberDelete" parameterType="String">
+	delete from member
+	where MEMB_ID = #{membId}
+</delete>
+
 </mapper>

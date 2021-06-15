@@ -18,7 +18,7 @@
 		<td>성별</td>
 		<td>등록일</td></tr>
 	<c:forEach items="${lists}" var="dto">
-	<tr><td>${dto.membId }</td>
+	<tr><td><a href="memInfo?membId=${dto.membId }">${dto.membId }</a></td>
 		<td>${dto.membName }</td>
 		<td>${dto.membPhoneNumber }</td>
 		<td>${dto.membGender }</td>
