@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.memberMapper">
+
+<sql id="baseColumn">
+MEMB_ID, MEMB_NAME, MEMB_PW, MEMB_ADDR, MEMB_PHONE_NUMBER, MEMB_EMAIL, MEMB_BIRTH, MEMB_GENDER, MEMB_ENTER_DATE, MEMB_CONFIRM, POST_NUMBER, DETAIL_ADDR
+</sql>
+
+<sql id="selectColumn">
+MEMB_ID membId, MEMB_NAME membName, MEMB_PW membPw, MEMB_ADDR membAddr, MEMB_PHONE_NUMBER membPhoneNumber, MEMB_EMAIL membEmail, MEMB_BIRTH membBirth, MEMB_GENDER membGender, MEMB_ENTER_DATE membEnterDate, MEMB_CONFIRM membConfirm, POST_NUMBER postNumber, DETAIL_ADDR detailAddr
+</sql>
+
+<insert id="memberInsert" parameterType="model.MemberDTO">
+	insert into member(<include refid="baseColumn" />)
+	values (#{membId}, #{membName}, #{membPw}, #{membAddr}, #{membPhoneNumber}, #{membEmail}, #{membBirth}, #{membGender}, sysdate, #{membConfirm}, #{postNumber}, #{detailAddr})
+</insert>
+
+<select id="memberList" resultType="model.MemberDTO">
+	select <include refid="selectColumn" />
+	from member
+</select>
+
+</mapper>

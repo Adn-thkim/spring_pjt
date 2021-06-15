@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.employeeMapper">
+
+<sql id="baseColumn">
+EMP_NO, EMP_ID, EMP_NAME, EMP_PW, EMP_DEPT_NUMBER, EMP_EMAIL, EMP_PHONE_NUMBER, HIRE_DATE, SALARY
+</sql>
+
+<sql id="selectColumn">
+EMP_NO empNo, EMP_ID empId, EMP_NAME empName, EMP_PW empPw, EMP_DEPT_NUMBER empDeptNumber, EMP_EMAIL empEmail,
+EMP_PHONE_NUMBER empPhoneNumber, HIRE_DATE hireDate, SALARY salary
+</sql>
+
+<delete id="employeeDelete" parameterType="string">
+	delete from employees
+	where emp_no = #{empNo}
+</delete>
+
+<update id="employeeUpdate" parameterType="emp">
+	update employees
+	set emp_dept_number = #{empDeptNumber}, emp_email = #{empEmail},
+		emp_phone_number = #{empPhoneNumber}, hire_date = #{hireDate}, salary = #{salary}
+	where emp_no = #{empNo}
+</update>
+
+<insert id="employeeInsert" parameterType="emp">
+	insert into employees(<include refid="baseColumn" />)
+	values(#{empNo}, #{empId}, #{empName}, #{empPw}, #{empDeptNumber}, #{empEmail}, #{empPhoneNumber}, #{hireDate}, #{salary})
+</insert>
+
+<select id="empInfo" parameterType="String" resultType="emp">
+	select <include refid="selectColumn" />
+	from employees
+	where emp_no = #{empNo}
+</select>
+
+<select id="empNo" resultType="int">
+	select nvl(max(EMP_NO), 10000)+1 from employees
+</select>
+
+<select id="empAllList" resultType="emp">
+	select <include refid="selectColumn" />
+	from employees
+</select>
+
+</mapper>
