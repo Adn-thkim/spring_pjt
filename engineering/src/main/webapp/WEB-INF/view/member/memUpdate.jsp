@@ -68,6 +68,11 @@
 				${dto.membId}
 			</td></tr>
 			
+		<tr><td>비밀번호</td>
+			<td>
+				<input type="password" name="membPw" /><span>${pwFail1}</span>
+			</td></tr>
+			
 		<tr><td>이름</td>
 			<td>
 				${dto.membName}
@@ -119,7 +124,7 @@
 			</td></tr>
 			
 		<tr><td colspan="2" align="center">
-				<input type="submit" value="수정" />
+				<input type="submit" value="수정 완료" />
 				<input type="button" value="취소" onclick="javascript:history.back();" />
 				<input type="button" value="강제삭제" onclick="javascript:location.href='memDel?membId=${dto.membId}'" />
 			</td></tr>

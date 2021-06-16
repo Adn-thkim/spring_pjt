@@ -16,6 +16,7 @@ import service.member.MemberInfoService;
 import service.member.MemberJoinService;
 import service.member.MemberListService;
 import service.member.MemberModifyService;
+import service.member.MemberUpdateService;
 
 @Controller
 @RequestMapping("member")
@@ -33,6 +34,8 @@ public class MemberController {
 	MemberDeleteService memberDeleteService;
 	@Autowired
 	MemberDetailService memberDetailService;
+	@Autowired
+	MemberUpdateService memberUpdateService;
 	
 	@RequestMapping("agree")
 	public String agree() {
@@ -89,6 +92,15 @@ public class MemberController {
 	public String memUpdate(HttpSession session, Model model) {
 		memberDetailService.memInfo(session, model);
 		return "member/memUpdate";
+	}
+	@RequestMapping("memUpdateOk")
+	public String updateOk(MemberCommand memberCommand, HttpSession session) {
+		int i = memberUpdateService.memUpdate(memberCommand, session);
+		if(i == 1) {
+			return "redirect:myInfo";
+		}else {
+			return "redirect:memUpdate";
+		}
 	}
 
 }
