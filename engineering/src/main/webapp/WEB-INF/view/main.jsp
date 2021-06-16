@@ -43,7 +43,7 @@
 <a href="member/memList">회원정보 리스트</a><br />
 
 <!-- 일반직원 로그인 -->
-	직원마이페이지
+<a href="emp/empMypage">직원마이페이지</a>
 </c:if>
 
 <c:if test="${authInfo.grade == 1}">

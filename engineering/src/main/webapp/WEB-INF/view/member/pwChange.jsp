@@ -8,10 +8,12 @@
 </head>
 <body>
 
-<a href="myInfo">회원정보 확인</a> | 
-<a href="pwChange">비밀번호</a> | 
-<a href="memDelete">회원탈퇴</a>
+<form action="pwChangeCnf" method="post">
 
+	비밀번호 : <input type="password" name="membPw" /><br />
+	<input type="submit" value="비밀번호 확인" />
+
+</form>
 
 </body>
 </html>

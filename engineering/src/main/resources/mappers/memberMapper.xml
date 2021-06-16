@@ -38,4 +38,10 @@ MEMB_ID membId, MEMB_NAME membName, MEMB_PW membPw, MEMB_ADDR membAddr, MEMB_PHO
 	where MEMB_ID = #{membId}
 </delete>
 
+<update id="pwChange" parameterType="model.MemberDTO">
+	update member
+	set MEMB_PW = #{membPw}
+	where MEMB_ID = #{membId}
+</update>
+
 </mapper>
