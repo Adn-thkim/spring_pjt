@@ -1,5 +1,7 @@
 package controller.member;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import command.MemberCommand;
 import service.member.MemberDeleteService;
+import service.member.MemberDetailService;
 import service.member.MemberInfoService;
 import service.member.MemberJoinService;
 import service.member.MemberListService;
@@ -28,6 +31,8 @@ public class MemberController {
 	MemberModifyService memberModifyService;
 	@Autowired
 	MemberDeleteService memberDeleteService;
+	@Autowired
+	MemberDetailService memberDetailService;
 	
 	@RequestMapping("agree")
 	public String agree() {
@@ -70,6 +75,20 @@ public class MemberController {
 			@RequestParam(value = "membId") String membId, Model model) {
 		memberDeleteService.memDel(membId);
 		return "redirect:memList";
+	}
+	@RequestMapping("memMyPage")
+	public String myPage() {
+		return "member/memMyPage";
+	}
+	@RequestMapping("myInfo")
+	public String myInfo(HttpSession session, Model model) {
+		memberDetailService.memInfo(session, model);
+		return "member/memDetail";
+	}
+	@RequestMapping("memUpdate")
+	public String memUpdate(HttpSession session, Model model) {
+		memberDetailService.memInfo(session, model);
+		return "member/memUpdate";
 	}
 
 }

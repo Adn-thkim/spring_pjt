@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false" %>'
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -60,11 +60,7 @@
     }
 </script>
 
-</head>
-<body>
-회원정보 수정 페이지 입니다.<br/>
-<form action="memModifyOk" method="post" name="frm">
-<input type="hidden" name="membId" value="${dto.membId}" />
+<form action="memUpdateOk" method="post" name="frm">
 	<table border="1" align="center">
 	
 		<tr><td>아이디</td>
@@ -105,8 +101,8 @@
 			
 		<tr><td>성별</td>
 			<td>
-				<c:if test="${dto.membGender == 'M'}">남자</c:if>
-				<c:if test="${dto.membGender == 'F'}">여자</c:if>
+				<c:if test="${dto.membGender.trim() == 'M'}">남자</c:if>
+				<c:if test="${dto.membGender.trim() == 'F'}">여자</c:if>
 			</td></tr>
 			
 		<tr><td>이메일</td>
@@ -117,9 +113,9 @@
 		<tr><td>이메일수신여부</td>
 			<td>
 				<input type="radio" name="membConfirm" value="Y"
-				<c:if test="${dto.membConfirm == 'Y'}">checked</c:if> />예
+				<c:if test="${dto.membConfirm.trim() == 'Y'}">checked</c:if> />예
 				<input type="radio" name="membConfirm" value="N"
-				<c:if test="${dto.membConfirm == 'N'}">checked</c:if> />아니오
+				<c:if test="${dto.membConfirm.trim() == 'N'}">checked</c:if> />아니오
 			</td></tr>
 			
 		<tr><td colspan="2" align="center">
@@ -129,5 +125,6 @@
 			</td></tr>
 	</table>
 </form>
+
 </body>
 </html>
