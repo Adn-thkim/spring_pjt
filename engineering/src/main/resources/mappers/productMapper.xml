@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.productMapper">
+
+<select id="autoNum" resultType="string">
+	SELECT GOODS_NUM.NEXTVAL FROM DUAL
+</select>
+
+<select id="catList" resultType="model.CatDTO">
+	SELECT CAT_NUM catNum, CAT_TYPE catType, CAT_NAME catName FROM CATEGORY
+</select>
+
+<insert id="prodInsert" parameterType="model.ProductDTO">
+	INSERT INTO PRODUCT(PROD_NO, CAT_NUM, PROD_NAME, PROD_PRICE, PROD_INFO, PROD_IMAGE, EMP_NO)
+	VALUES (#{prodNo}, #{catNum}, #{prodName}, #{prodPrice}, #{prodInfo}, #{prodImage}, #{empNo})
+</insert>
+
+</mapper>

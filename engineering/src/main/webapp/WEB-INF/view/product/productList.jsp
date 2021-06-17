@@ -7,11 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<a href="myInfo">회원정보 확인</a> | 
-<a href="pwChange">비밀번호 변경</a> | 
-<a href="memDelete">회원 탈퇴</a>
-
-
+상품 정보리스트 페이지입니다. <br/>
+<a href="prodJoin">상품등록</a>
 </body>
 </html>

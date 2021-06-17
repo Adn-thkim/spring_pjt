@@ -50,57 +50,68 @@ public class MemberController {
 		
 		return "member/agree";
 	}
+	
 	@RequestMapping("memReget")
 	public String memReget() {
 		return "member/memberForm";
 	}
+	
 	@RequestMapping(value="memJoin", method=RequestMethod.POST)
 	public String memJoin(MemberCommand memberCommand) {
 		memberJoinService.memberInsert(memberCommand);
 		return "redirect:../main";
 	}
+	
 	@RequestMapping("memList")
 	public String memList(Model model) {
 		memberListService.memList(model);
 		return "member/memberList";
 	}
+	
 	@RequestMapping("memInfo")
 	public String memInfo(
 			@RequestParam(value = "membId") String membId, Model model) {
 		memberInfoService.memInfo(membId, model);
 		return "member/memberInfo"; 
 	}
+	
 	@RequestMapping("memModify")
 	public String memModify(
 			@RequestParam(value = "membId") String membId, Model model) {
 		memberInfoService.memInfo(membId, model);
 		return "member/memberModify";
 	}
+	
 	@RequestMapping("memModifyOk")
 	public String memModifyOk(MemberCommand memberCommand) {
 		memberModifyService.memUpdate(memberCommand);
 		return "redirect:memInfo?membId="+memberCommand.getMembId();
 	}
+	
 	@RequestMapping("memDel")
 	public String memDel(
 			@RequestParam(value = "membId") String membId, Model model) {
 		memberDeleteService.memDel(membId);
 		return "redirect:memList";
 	}
+	
 	@RequestMapping("memMyPage")
 	public String myPage() {
 		return "member/memMyPage";
 	}
+	
 	@RequestMapping("myInfo")
 	public String myInfo(HttpSession session, Model model) {
 		memberDetailService.memInfo(session, model);
 		return "member/memDetail";
 	}
+	
 	@RequestMapping("memUpdate")
 	public String memUpdate(HttpSession session, Model model) {
 		memberDetailService.memInfo(session, model);
 		return "member/memUpdate";
 	}
+	
 	@RequestMapping("memUpdateOk")
 	public String updateOk(MemberCommand memberCommand, HttpSession session) {
 		int i = memberUpdateService.memUpdate(memberCommand, session);
@@ -110,11 +121,13 @@ public class MemberController {
 			return "redirect:memUpdate";
 		}
 	}
+	
 	@RequestMapping("memDelete")
 	public String memDelete() {
 		
 		return "member/memDelete";
 	}
+	
 	@RequestMapping("memDeleteOk")
 	public String memDeleteOk(
 			@RequestParam(value="membPw") String membPw, HttpSession session) {
@@ -122,11 +135,13 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
 	@RequestMapping("pwChange")
 	public String pwChange() {
 		
 		return "member/pwChange";
 	}
+	
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	@RequestMapping("pwChangeCnf") // 얘가 주소명
@@ -139,6 +154,7 @@ public class MemberController {
 			return "member/pwChange";
 		}
 	}
+	
 	@RequestMapping("pwChangeOk")
 	public String pwChangeOk(HttpSession session,
 			@RequestParam(value="membPw") String membPw,
