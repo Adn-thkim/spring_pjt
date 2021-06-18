@@ -16,4 +16,26 @@
 	VALUES (#{prodNo}, #{catNum}, #{prodName}, #{prodPrice}, #{prodInfo}, #{prodImage}, #{empNo})
 </insert>
 
+<select id="prodList" resultType="model.ProductDTO">
+	SELECT PROD_NO prodNo, CAT_NUM catNum, PROD_NAME prodName, PROD_PRICE prodPrice, PROD_INFO prodInfo, PROD_IMAGE prodImage, EMP_NO empNo
+	FROM PRODUCT
+</select>
+
+<select id="prodInfo" parameterType="String" resultType="model.ProductDTO">
+	SELECT PROD_NO prodNo, CAT_NUM catNum, PROD_NAME prodName, PROD_PRICE prodPrice, PROD_INFO prodInfo, PROD_IMAGE prodImage, EMP_NO empNo
+	FROM PRODUCT
+	WHERE PROD_NO = #{prodNo}
+</select>
+
+<update id="prodUpdate" parameterType="model.ProductDTO">
+	UPDATE PRODUCT
+	SET PROD_INFO = #{prodInfo}, PROD_NAME = #{prodName}, PROD_PRICE = #{prodPrice}
+	WHERE PROD_NO = #{prodNo}
+</update>
+
+<delete id="prodDelete" parameterType="String">
+	DELETE FROM PRODUCT
+	WHERE PROD_NO = #{prodNo}
+</delete>
+
 </mapper>

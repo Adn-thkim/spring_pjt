@@ -29,4 +29,24 @@ public class ProductRepository {
 		statement = namespace + ".prodInsert";
 		sqlSession.insert(statement, dto);
 	}
+	
+	public List<ProductDTO> prodList(){
+		statement = namespace + ".prodList";
+		return sqlSession.selectList(statement);
+	}
+	
+	public ProductDTO prodInfo(String prodNo){
+		statement = namespace + ".prodInfo";
+		return sqlSession.selectOne(statement, prodNo);
+	}
+	
+	public void prodUpdate(ProductDTO dto) {
+		statement = namespace + ".prodUpdate";
+		sqlSession.update(statement, dto);
+	}
+	
+	public void prodDel(String prodNo) {
+		statement = namespace + ".prodDelete";
+		sqlSession.update(statement, prodNo);
+	}
 }
