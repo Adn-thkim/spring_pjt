@@ -41,4 +41,24 @@ public class EmployeeRepository {
 		statement = namespace + ".empAllList";
 		return sqlSession.selectList(statement);
 	}
+	
+	public EmployeeDTO empDetail(String empId) {
+		statement = namespace + ".empDetail";
+		return sqlSession.selectOne(statement, empId);
+	}
+	
+	public void employeeUpdate(EmployeeDTO dto) {
+		statement = namespace + ".empUpdate";
+		sqlSession.update(statement, dto);
+	}
+	
+	public void pwChange(EmployeeDTO dto) {
+		statement = namespace + ".pwChange";
+		sqlSession.update(statement, dto);
+	}
+	
+	public void empDel(String userId) {
+		statement = namespace + ".empDel";
+		sqlSession.delete(statement, userId);
+	}
 }

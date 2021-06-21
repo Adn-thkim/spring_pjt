@@ -124,7 +124,6 @@ public class MemberController {
 	
 	@RequestMapping("memDelete")
 	public String memDelete() {
-		
 		return "member/memDelete";
 	}
 	
@@ -138,17 +137,16 @@ public class MemberController {
 	
 	@RequestMapping("pwChange")
 	public String pwChange() {
-		
 		return "member/pwChange";
 	}
 	
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	@RequestMapping("pwChangeCnf") // 얘가 주소명
-	public String pwChangeCnf(HttpSession session, @RequestParam(value="membPw") String mambPw) {
+	public String pwChangeCnf(HttpSession session, @RequestParam(value="membPw") String membPw) {
 		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
 		String userPw = authInfo.getUserPw();
-		if(bcryptPasswordEncoder.matches(mambPw, userPw)){
+		if(bcryptPasswordEncoder.matches(membPw, userPw)){
 			return "member/pwChangeCnf";
 		}else {
 			return "member/pwChange";

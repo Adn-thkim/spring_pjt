@@ -24,7 +24,7 @@
 			
 	<tr><th>가격</th>
 		<td>
-			<input type="number" name="prodPrice" value="${dto.prodPrice}" min=0, step="1" value="0" />
+			<input type="number" name="prodPrice" value="${dto.prodPrice}" min=0, step="10"/>
 		</td></tr>
 			
 	<tr><th>설명</th>

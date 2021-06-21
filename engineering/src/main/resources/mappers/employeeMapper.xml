@@ -44,4 +44,28 @@ EMP_PHONE_NUMBER empPhoneNumber, HIRE_DATE hireDate, SALARY salary
 	from employees
 </select>
 
+<select id="empDetail" parameterType="String" resultType="emp">
+	SELECT <include refid="selectColumn" />
+	FROM EMPLOYEES
+	WHERE EMP_ID = #{empId}
+</select>
+
+<update id="empUpdate">
+	UPDATE EMPLOYEES
+	SET emp_dept_number = #{empDeptNumber}, emp_email = #{empEmail},
+		emp_phone_number = #{empPhoneNumber}, hire_date = #{hireDate}, salary = #{salary}
+	WHERE EMP_ID = #{empId}
+</update>
+
+<update id="pwChange">
+	UPDATE EMPLOYEES
+	SET EMP_PW = #{empPw}
+	WHERE EMP_ID = #{empId}
+</update>
+
+<delete id="empDel">
+	DELETE FROM EMPLOYEES
+	WHERE EMP_ID = #{empId}
+</delete>
+
 </mapper>
