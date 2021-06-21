@@ -53,5 +53,22 @@
 </c:if>
 <a href="logout">로그아웃</a>
 </c:if>
+
+<table width="600">
+	<tr>
+	<c:forEach items="${prodList}" var="dto" varStatus="cnt">
+		<td>
+		<a href="prod/prodInfo?prodNo=${dto.prodNo}">
+		<img width="200" src="product/upload/${dto.prodImage.split(',')[0]}" /><br />
+		${dto.prodName}<br />${dto.prodPrice}원
+		</a>
+		</td>
+		<c:if test="${cnt.count % 3 == 0}">
+			</tr><tr>
+		</c:if>
+	</c:forEach>
+	</tr>
+</table>
+
 </body>
 </html>

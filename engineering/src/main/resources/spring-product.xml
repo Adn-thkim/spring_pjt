@@ -21,4 +21,8 @@
        		
        		<bean class="service.product.ProductDeleteService" />
        		
+       		<bean class="service.product.CartAddService" />
+       		
+       		<bean class="service.product.CartListService" />
+       		
 </beans>

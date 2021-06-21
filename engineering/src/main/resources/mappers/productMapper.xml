@@ -38,4 +38,42 @@
 	WHERE PROD_NO = #{prodNo}
 </delete>
 
+<insert id="cartAdd" parameterType="model.CartDTO">
+	MERGE INTO CART c
+	USING (SELECT PROD_NO FROM PRODUCT WHERE PROD_NO = #{prodNo}) p
+	ON (c.PROD_NO = p.PROD_NO AND MEMB_ID = #{membId})
+	WHEN MATCHED THEN
+	UPDATE SET CART_QTY = CART_QTY + #{cartQty},
+			   CART_PRICE = CART_PRICE + #{cartPrice}
+	WHEN NOT MATCHED THEN
+	INSERT (MEMB_ID, PROD_NO, CAT_NUM, CART_QTY, CART_PRICE)
+	VALUES (#{membId}, #{prodNo}, #{catNum}, #{cartQty}, #{cartPrice})
+</insert>
+
+<select id="memCart" parameterType="String" resultType="String">
+	SELECT PROD_NO
+	FROM CART
+	WHERE MEMB_ID = #{membId}
+</select>
+
+<select id="cartList" parameterType="model.CartDTO" resultMap="productCartMap">
+	SELECT PROD_NAME, PROD_PRICE,
+		   CART_QTY, MEMB_ID, c.PROD_NO, CART_PRICE
+	FROM PRODUCT p, CART c
+	WHERE p.PROD_NO = c.PROD_NO AND c.MEMB_ID = #{membId} AND c.PROD_NO = #{prodNo};
+</select>
+
+<resultMap type="model.ProductCartDTO" id="productCartMap">
+	<association property="productdto" javaType="model.ProductDTO">
+		<result column="PROD_NAME" jdbcType="VARCHAR" property="prodName"/>
+		<result column="PROD_PRICE" jdbcType="VARCHAR" property="prodPrice"/>
+	</association>
+	<association property="cartdto" javaType="model.CartDTO">
+		<id column="MEMB_ID" jdbcType="VARCHAR" property="membId"/>
+		<id column="PROD_NO" jdbcType="VARCHAR" property="prodNo"/>
+		<result column="CART_QTY" jdbcType="VARCHAR" property="cartQty"/>
+		<result column="CART_PRICE" jdbcType="VARCHAR" property="cartPrice"/>
+	</association>
+</resultMap>
+
 </mapper>
