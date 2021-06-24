@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import model.CartDTO;
 import model.CatDTO;
+import model.PaymentDTO;
 import model.ProductCartDTO;
 import model.ProductDTO;
+import model.PurchListDTO;
+import model.PurchaseDTO;
 
 public class ProductRepository {
 	
@@ -65,5 +68,35 @@ public class ProductRepository {
 	public ProductCartDTO cartList(CartDTO dto) {
 		statement = namespace + ".cartList";
 		return sqlSession.selectOne(statement, dto);
+	}
+	
+	public void cartQtyDown(CartDTO dto) {
+		statement = namespace + ".cartQtyDown";
+		sqlSession.update(statement, dto);
+	}
+	
+	public void purchInsert(PurchaseDTO dto) {
+		statement = namespace + ".purchInsert";
+		sqlSession.insert(statement, dto);
+	}
+	
+	public void purchListInsert(CartDTO dto) {
+		statement = namespace + ".purchListInsert";
+		sqlSession.insert(statement, dto);
+	}
+	
+	public void cartProdDel(CartDTO dto) {
+		statement = namespace + ".cartProdDel";
+		sqlSession.delete(statement, dto);
+	}
+	
+	public List<PurchListDTO> purchList(String membId){
+		statement = namespace + ".purchList";
+		return sqlSession.selectList(statement, membId);
+	}
+	
+	public void payInsert(PaymentDTO dto) {
+		statement = namespace + ".payInsert";
+		sqlSession.insert(statement, dto);
 	}
 }

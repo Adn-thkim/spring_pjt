@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,7 @@
 	<tr><td><img width="50" src='../product/upload/${dto.prodImage.split(",")[0]}' /></td>
 		<td><a href="prodUpdate?prodNo=${dto.prodNo}">${dto.prodNo}</a></td>
 		<td>${dto.prodName}</td>
-		<td>${dto.prodPrice}</td></tr>
+		<td align="right"><fmt:formatNumber value="${dto.prodPrice}" pattern="#,###,###,###"/>원</td></tr>
 	</c:forEach>
 </table>
 

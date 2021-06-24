@@ -60,20 +60,64 @@
 	SELECT PROD_NAME, PROD_PRICE,
 		   CART_QTY, MEMB_ID, c.PROD_NO, CART_PRICE
 	FROM PRODUCT p, CART c
-	WHERE p.PROD_NO = c.PROD_NO AND c.MEMB_ID = #{membId} AND c.PROD_NO = #{prodNo};
+	WHERE p.PROD_NO = c.PROD_NO AND c.MEMB_ID = #{membId} AND c.PROD_NO = #{prodNo}
 </select>
 
 <resultMap type="model.ProductCartDTO" id="productCartMap">
-	<association property="productdto" javaType="model.ProductDTO">
+	<association property="productDTO" javaType="model.ProductDTO">
 		<result column="PROD_NAME" jdbcType="VARCHAR" property="prodName"/>
 		<result column="PROD_PRICE" jdbcType="VARCHAR" property="prodPrice"/>
 	</association>
-	<association property="cartdto" javaType="model.CartDTO">
+	<association property="cartDTO" javaType="model.CartDTO">
 		<id column="MEMB_ID" jdbcType="VARCHAR" property="membId"/>
 		<id column="PROD_NO" jdbcType="VARCHAR" property="prodNo"/>
 		<result column="CART_QTY" jdbcType="VARCHAR" property="cartQty"/>
 		<result column="CART_PRICE" jdbcType="VARCHAR" property="cartPrice"/>
 	</association>
 </resultMap>
+
+<update id="cartQtyDown">
+	UPDATE CART
+	SET CART_QTY = CART_QTY - 1,
+		CART_PRICE = CART_PRICE - #{cartPrice}
+	WHERE MEMB_ID = #{membId} and PROD_NO = #{prodNo}
+</update>
+
+<insert id="purchInsert" parameterType="model.PurchaseDTO">
+	INSERT INTO PURCHASE(PURCH_NO, PURCH_DATE, PURCH_TOTAL, PURCH_ADDR, PURCH_RECEIVER, PURCH_PHONE_NUMBER, PURCH_MSG, MEMB_ID)
+	VALUES (#{purchNo}, SYSDATE, #{purchTotal}, #{purchAddr}, #{purchReceiver}, #{purchPhoneNumber}, #{purchMsg}, #{membId})
+</insert>
+
+<insert id="purchListInsert" parameterType="model.CartDTO">
+	INSERT INTO PURCHASE_LIST(PURCH_NO, PROD_NO, CAT_NUM, PURCH_QTY, PURCH_PRICE)
+	SELECT #{purchNo}, PROD_NO, CAT_NUM, CART_QTY, CART_PRICE
+	FROM CART
+	WHERE MEMB_ID = #{membId} AND PROD_NO = #{prodNo}
+</insert>
+
+<delete id="cartProdDel" parameterType="model.CartDTO">
+	DELETE FROM CART
+	WHERE MEMB_ID = #{membId} AND PROD_NO = #{prodNo}
+</delete>
+
+<select id="purchList" parameterType="String" resultType="model.PurchListDTO">
+	SELECT pr.PROD_NO prodNo, PROD_NAME prodName, PROD_IMAGE prodImage, pu.PURCH_NO purchNo, PURCH_DATE purchDate, PURCH_TOTAL purchTotal, PAY_NO payNo
+	FROM PRODUCT pr, PURCHASE_LIST pl, PURCHASE pu, PAYMENT pa
+	WHERE pr.PROD_NO = pl.PROD_NO
+      AND pl.PURCH_NO = pu.PURCH_NO
+      AND pu.PURCH_NO = pa.PURCH_NO(+)
+      AND pu.MEMB_ID = #{membId}
+</select>
+
+<sql id="payNo">
+	SELECT TO_CHAR(SYSDATE, 'yyyymmdd') || NVL2(MAX(PAY_NO), SUBSTR(MAX(PAY_NO),-6), 100000) + 1
+	FROM PAYMENT
+	WHERE TO_CHAR(PAY_DATE, 'yyyymmdd') = TO_CHAR(SYSDATE, 'yyyymmdd')
+</sql>
+
+<insert id="payInsert" parameterType="model.PaymentDTO">
+	INSERT INTO PAYMENT(PAY_NO, PURCH_NO, PAY_METHOD, PAY_ACC_NUM, PAY_PRICE, PAY_DATE, PAY_CARD_BANK)
+	VALUES ( (<include refid="payNo" />), #{purchNo}, #{payMethod}, #{payAccNum}, #{payPrice}, SYSDATE, #{payCardBank})
+</insert>
 
 </mapper>

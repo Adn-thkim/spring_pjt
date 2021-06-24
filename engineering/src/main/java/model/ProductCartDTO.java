@@ -2,19 +2,19 @@ package model;
 
 public class ProductCartDTO {
 	
-	ProductDTO productdto;
-	CartDTO cartdto;
+	ProductDTO productDTO;
+	CartDTO cartDTO;
 	
-	public ProductDTO getProductdto() {
-		return productdto;
+	public ProductDTO getProductDTO() {
+		return productDTO;
 	}
-	public void setProductdto(ProductDTO productdto) {
-		this.productdto = productdto;
+	public void setProductDTO(ProductDTO productDTO) {
+		this.productDTO = productDTO;
 	}
-	public CartDTO getCartdto() {
-		return cartdto;
+	public CartDTO getCartDTO() {
+		return cartDTO;
 	}
-	public void setCartdto(CartDTO cartdto) {
-		this.cartdto = cartdto;
+	public void setCartDTO(CartDTO cartDTO) {
+		this.cartDTO = cartDTO;
 	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -50,6 +51,8 @@
 <c:if test="${authInfo.grade == 1}">
 <!-- 사용자 로그인 -->
 	<a href="member/memMyPage">마이페이지</a>
+	<a href="prod/cartList">장바구니</a>
+	<a href="prod/purchCon">주문확인</a>
 </c:if>
 <a href="logout">로그아웃</a>
 </c:if>
@@ -60,7 +63,7 @@
 		<td>
 		<a href="prod/prodInfo?prodNo=${dto.prodNo}">
 		<img width="200" src="product/upload/${dto.prodImage.split(',')[0]}" /><br />
-		${dto.prodName}<br />${dto.prodPrice}원
+		${dto.prodName}<br /><fmt:formatNumber value="${dto.prodPrice}" pattern="#,###,###,###"/>원
 		</a>
 		</td>
 		<c:if test="${cnt.count % 3 == 0}">
