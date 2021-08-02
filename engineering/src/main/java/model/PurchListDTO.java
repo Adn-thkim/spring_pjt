@@ -11,6 +11,7 @@ public class PurchListDTO {
 	Date purchDate;
 	String purchTotal;
 	String payNo;
+	String reviewContent;
 	
 	public String getProdNo() {
 		return prodNo;
@@ -53,5 +54,11 @@ public class PurchListDTO {
 	}
 	public void setPayNo(String payNo) {
 		this.payNo = payNo;
+	}
+	public String getReviewContent() {
+		return reviewContent;
+	}
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
 	}
 }

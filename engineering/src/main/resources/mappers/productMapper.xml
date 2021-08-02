@@ -101,11 +101,13 @@
 </delete>
 
 <select id="purchList" parameterType="String" resultType="model.PurchListDTO">
-	SELECT pr.PROD_NO prodNo, PROD_NAME prodName, PROD_IMAGE prodImage, pu.PURCH_NO purchNo, PURCH_DATE purchDate, PURCH_TOTAL purchTotal, PAY_NO payNo
-	FROM PRODUCT pr, PURCHASE_LIST pl, PURCHASE pu, PAYMENT pa
+	SELECT pr.PROD_NO prodNo, PROD_NAME prodName, PROD_IMAGE prodImage, pu.PURCH_NO purchNo, PURCH_DATE purchDate, PURCH_TOTAL purchTotal, PAY_NO payNo, REVIEW_CONTENT reviewContent
+	FROM PRODUCT pr, PURCHASE_LIST pl, PURCHASE pu, PAYMENT pa, REVIEW r
 	WHERE pr.PROD_NO = pl.PROD_NO
       AND pl.PURCH_NO = pu.PURCH_NO
       AND pu.PURCH_NO = pa.PURCH_NO(+)
+      AND pl.PURCH_NO = r.PURCH_NO(+)
+      AND pl.PROD_NO = r.PROD_NO(+)
       AND pu.MEMB_ID = #{membId}
 </select>
 
@@ -119,5 +121,32 @@
 	INSERT INTO PAYMENT(PAY_NO, PURCH_NO, PAY_METHOD, PAY_ACC_NUM, PAY_PRICE, PAY_DATE, PAY_CARD_BANK)
 	VALUES ( (<include refid="payNo" />), #{purchNo}, #{payMethod}, #{payAccNum}, #{payPrice}, SYSDATE, #{payCardBank})
 </insert>
+
+<insert id="reviewInsert" parameterType="model.ReviewDTO">
+	INSERT INTO REVIEW(PURCH_NO, PROD_NO, REVIEW_CONTENT, REVIEW_DATE, CAT_NUM)
+	VALUES (#{purchNo}, #{prodNo}, #{reviewContent}, SYSDATE, (SELECT CAT_NUM FROM PRODUCT WHERE PROD_NO=#{prodNo}))
+</insert>
+
+<select id="reviewSelect" parameterType="model.ReviewDTO" resultType="model.ReviewDTO">
+	SELECT PURCH_NO purchNo, PROD_NO prodNo, REVIEW_CONTENT reviewContent
+	FROM REVIEW
+	WHERE PURCH_NO = #{purchNo} AND PROD_NO = #{prodNo}
+</select>
+
+<update id="reviewUpdate" parameterType="model.ReviewDTO">
+	UPDATE REVIEW
+	SET REVIEW_CONTENT = #{reviewContent}
+	WHERE PROD_NO = #{prodNo}
+	  AND PURCH_NO = #{purchNo}
+</update>
+
+<select id="prodReviewSelect" parameterType="String" resultType="model.ProdReviewDTO">
+	SELECT P.MEMB_ID membId, pl.PURCH_NO purchNo, pl.PROD_NO prodNo, REVIEW_CONTENT reviewContent, REVIEW_DATE reviewDate, PURCH_DATE purchDate
+	FROM PURCHASE p, PURCHASE_LIST pl, REVIEW r
+	WHERE p.PURCH_NO = pl.PURCH_NO
+	  AND pl.PROD_NO = r.PROD_NO
+	  AND pl.PURCH_NO = r.PURCH_NO
+	  AND r.PROD_NO = #{prodNo}
+</select>
 
 </mapper>

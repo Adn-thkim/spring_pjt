@@ -24,6 +24,9 @@ import service.product.ProductJoinService;
 import service.product.ProductListService;
 import service.product.ProductModifyService;
 import service.product.PurchaseListService;
+import service.product.ReviewModifyService;
+import service.product.ReviewUpdateService;
+import service.product.ReviewWriteService;
 
 @Controller
 @RequestMapping("prod")
@@ -170,8 +173,49 @@ public class ProdController {
 		return "redirect:purchCon";
 	}
 	
-	@RequestMapping("review")
-	public String review() {
-		return "product/review";
+	@RequestMapping("goodsReview")
+	public String goodsReview(
+			@RequestParam(value="purchNo") String purchNo,
+			@RequestParam(value="prodNo") String prodNo,
+			@RequestParam(value="prodName") String prodName,
+			Model model) {
+		model.addAttribute("prodNo", prodNo);
+		model.addAttribute("purchNo", purchNo);
+		model.addAttribute("prodName", prodName);
+		return "product/prodReview";
+	}
+	
+	@Autowired
+	ReviewWriteService reviewWriteService;
+	@RequestMapping("reviewOk")
+	public String reviewOk(
+			@RequestParam(value="prodNo") String prodNo,
+			@RequestParam(value="purchNo") String purchNo,
+			@RequestParam(value="reviewContent") String reviewContent) {
+		reviewWriteService.reviewWrite(prodNo, purchNo, reviewContent);
+		return "redirect:purchCon";
+	}
+	
+	@Autowired
+	ReviewUpdateService reviewUpdateService;
+	@RequestMapping("goodsReviewUpdate")
+	public String goodsReviewUpdate(
+			@RequestParam(value="prodNo") String prodNo,
+			@RequestParam(value="purchNo") String purchNo,
+			@RequestParam(value="prodName") String prodName,
+			Model model) {
+		reviewUpdateService.reviewUpdate(prodNo, purchNo, prodName, model);
+		return "product/reviewUpdate";
+	}
+	
+	@Autowired
+	ReviewModifyService reviewModifyService;
+	@RequestMapping("goodsReviewUpdateOk")
+	public String goodsReviewUpdateOk(
+			@RequestParam(value="prodNo") String prodNo,
+			@RequestParam(value="purchNo") String purchNo,
+			@RequestParam(value="reviewContent") String reviewContent) {
+		reviewModifyService.reviewUpdate(prodNo, purchNo, reviewContent);
+		return "redirect:purchCon";
 	}
 }
